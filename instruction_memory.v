@@ -1,7 +1,7 @@
 module instruction_memory (
     input clk,
     input rst,
-    input [31:0] addr,
+    input [63:0] addr,
     output reg [31:0] inst
 );
 

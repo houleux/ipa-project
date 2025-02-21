@@ -139,7 +139,8 @@ module alu (
   input [63:0] rs1,
   input [63:0] rs2,
   input [3:0] ALUcontrol,
-  output reg [63:0] out 
+  output reg [63:0] out,
+  output reg zero 
 );
 
   wire [63:0] add_result, or_result, and_result, sub_result;
@@ -156,6 +157,8 @@ module alu (
       4'b0000: out = and_result;  // AND
       4'b0001: out = or_result;   // OR
     endcase
+
+    zero = (sub_result == 64'b0) ? 1'b1 : 1'b0;
   end
 
 endmodule

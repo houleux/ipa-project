@@ -1,7 +1,7 @@
 module program_counter(clk,reset,in,out);
     input reset,clk;
-    input [31:0] in;
-    output reg [31:0] out;
+    input [63:0] in;
+    output reg [63:0] out;
 
     always @(posedge clk or posedge reset)
     begin
