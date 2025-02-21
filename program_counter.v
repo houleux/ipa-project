@@ -1,8 +1,8 @@
-module Program_counter(clk,reset,in,out);
-    input reset,clk,enable;
+module program_counter(clk,reset,in,out);
+    input reset,clk;
     input [31:0] in;
-    output [31:0] out;
-    reg [31:0] out;
+    output reg [31:0] out;
+
     always @(posedge clk or posedge reset)
     begin
         if(reset)
