@@ -6,7 +6,7 @@ module immediate_generation (
 
     always @(*) begin
         case (opcode) 
-            7'b0010011: // I-Type
+            7'b0000011: // I-Type
                 imm_out = {{32{instruction[31]}}, instruction[31:20]};
 
             7'b0100011: // S-Type
