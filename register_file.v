@@ -10,7 +10,7 @@ module reg_file (
     reg [63:0] registers [31:0];  // 32 registers of 64-bit each
     integer k;
 
-    // Reset logic
+    // Reset and Write logic
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             for (k = 0; k < 32; k = k + 1) begin
@@ -22,10 +22,10 @@ module reg_file (
         end
     end
 
-    // Read logic (combinational, not inside always block)
-  
-       assign read_data1 = registers[rs1];  
-       assign read_data2 = registers[rs2];
-    
+    // Read logic (Combinational - inside always block)
+    always @(*) begin
+        read_data1 = registers[rs1];  
+        read_data2 = registers[rs2];
+    end
 
 endmodule
