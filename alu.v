@@ -135,17 +135,12 @@ module orer (
 
 endmodule
 
-
 module alu (
   input [63:0] rs1,
   input [63:0] rs2,
-  input [6:0]  funct7,
-  input [2:0]  funct3,
+  input [3:0] ALUcontrol,
   output reg [63:0] out 
 );
-
-  wire [9:0] c_i;
-  assign c_i = {funct3, funct7};
 
   wire [63:0] add_result, or_result, and_result, sub_result;
 
@@ -155,15 +150,15 @@ module alu (
   ander D1(.A(rs1), .B(rs2), .C(and_result));
 
   always @(*) begin
-    case (c_i)
-      {3'h0, 7'h0}: out = add_result;  
-      {3'h0, 7'h20}: out = sub_result;  
-      {3'h6, 7'h0}: out = or_result;
-      {3'h7, 7'h0}: out = and_result;
-      default: out = 64'd0;
+    case (ALUcontrol)  // Using ALUcontrol directly
+      4'b0010: out = add_result;  // ADD
+      4'b0110: out = sub_result;  // SUBTRACT
+      4'b0000: out = and_result;  // AND
+      4'b0001: out = or_result;   // OR
     endcase
   end
 
 endmodule
+
 
 
