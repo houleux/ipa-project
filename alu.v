@@ -135,6 +135,15 @@ module orer (
 
 endmodule
 
+module SL1 (
+  input [63:0] A,
+  output [63:0] C
+);
+
+  assign C = {A[62:0], 1'b0};
+
+endmodule
+
 module alu (
   input [63:0] rs1,
   input [63:0] rs2,
