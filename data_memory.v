@@ -1,24 +1,24 @@
 module data_memory (
-    input clk,                  // Clock signal
-    input MemRead,              // Control signal for reading memory
-    input MemWrite,             // Control signal for writing to memory
-    input [31:0] address,       // Address input (memory location)
-    input [31:0] write_data,    // Data to be written
-    output reg [31:0] read_data // Output read data
+    input clk,                  
+    input MemRead,              
+    input MemWrite,             
+    input [63:0] address,       
+    input [63:0] write_data,    
+    output reg [63:0] read_data 
 );
 
-    reg [31:0] memory [0:255];  // 256 words of 32-bit memory
+    reg [63:0] memory [0:1023]; 
 
     always @(posedge clk) begin
         if (MemWrite) 
-            memory[address[7:2]] <= write_data;  // Store data (word-aligned)
+            memory[address[10:3]] <= write_data;  
     end
 
     always @(*) begin
         if (MemRead) 
-            read_data = memory[address[7:2]];   // Load data
+            read_data = memory[address[10:3]];   
         else 
-            read_data = 32'b0;                 // Default output when not reading
+            read_data = 64'b0;                 
     end
 
 endmodule
