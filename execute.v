@@ -1,5 +1,3 @@
-`include "alu.v"
-
 module mux(a,b,sel,out);
     input [63:0] a,b;
     input sel;

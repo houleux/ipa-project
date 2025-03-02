@@ -1,5 +1,3 @@
-`include "alu.v"
-
 module program_counter(clk,reset,in,out);
     input reset,clk;
     input [63:0] in;
@@ -33,10 +31,10 @@ module instruction_fetch (
   input clk,
   input rst,
   input [63:0] in,
+  output [63:0] out,
   output [31:0] inst,
   output [63:0] PC4
 );
-  wire [63:0] out;
 
   program_counter p1(.clk(clk), .reset(rst), .in(in), .out(out));
   adder a1(.A(out), .B(64'd4), .M(1'b0), .S(PC4));
