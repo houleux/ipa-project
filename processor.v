@@ -31,7 +31,6 @@ module processor (
   wire branch;
   wire muxs;
 
-
   control_unit c1 (
       .instruction(inst[6:0]),
       .MemWrite(MemWrite),
@@ -50,14 +49,10 @@ module processor (
       .out(out)
   );
   instruction_memory i1 (
-      .clk (clk),
-      .rst (reset),
       .addr(out),
       .inst(inst)
   );
   reg_file r1 (
-      .clk(clk),
-      .reset(reset),
       .reg_write(reg_write),
       .rs1(inst[19:15]),
       .rs2(inst[24:20]),
@@ -90,7 +85,6 @@ module processor (
       .control_output(alu_control)
   );
   data_memory d1 (
-      .clk(clk),
       .MemRead(MemRead),
       .MemWrite(MemWrite),
       .address(alu_result),
@@ -131,4 +125,3 @@ module processor (
       .out(in)
   );
 endmodule
-
