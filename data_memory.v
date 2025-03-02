@@ -1,5 +1,4 @@
 module data_memory (
-    input clk,                  
     input MemRead,              
     input MemWrite,             
     input [63:0] address,       
@@ -9,9 +8,9 @@ module data_memory (
 
     reg [63:0] memory [0:1023]; 
 
-    always @(posedge clk) begin
+    always @(*) begin
         if (MemWrite) 
-            memory[address[10:3]] <= write_data;  
+            memory[address[10:3]] = write_data;  
     end
 
     always @(*) begin
