@@ -19,11 +19,11 @@ module alu_control(
     output reg [3:0] control_output 
 );
 
-    wire [6:0] funct7;  // funct7 is 7 bits (31-25)
-    wire [2:0] funct3;  // funct3 is 3 bits (14-12)
+    wire [6:0] funct7;  
+    wire [2:0] funct3;  
 
-    assign funct7 = instruction[31:25];  // Extracting bits 31-25
-    assign funct3 = instruction[14:12];  // Extracting bits 14-12
+    assign funct7 = instruction[31:25];  
+    assign funct3 = instruction[14:12];  
 
     always @(*) begin
         case (ALUOp)
@@ -35,9 +35,9 @@ module alu_control(
                     10'b0100000_000: control_output = 4'b0110; // SUBTRACT
                     10'b0000000_111: control_output = 4'b0000; // AND
                     10'b0000000_110: control_output = 4'b0001; // OR
-                    default: control_output = 4'b0000; // Default (safe fallback)
+                    default: control_output = 4'b0000; 
                 endcase
-            default: control_output = 4'b0000; // Default case
+            default: control_output = 4'b0000; 
         endcase
     end
 
