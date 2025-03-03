@@ -8,8 +8,8 @@ module data_memory (
 
     reg [63:0] memory [0:1023]; 
     initial begin
-        memory[0] = 32'b1;
-        memory[1] = 32'd10;
+        memory[0] = 64'b1;
+        memory[1] = 64'd10;
     end
     always @(*) begin
         if (MemWrite) 

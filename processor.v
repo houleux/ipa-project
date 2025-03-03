@@ -56,7 +56,7 @@ module testbench;
   // end
 
   initial begin
-    $monitor("result = %d, x1 = %d, x19 = %d, time = %t", p1.u2.r1.registers[10], p1.u2.r1.registers[1], p1.u2.r1.registers[19], $time);
+    $monitor("in = %d, result = %d, x1 = %d, x19 = %d, time = %t", p1.u1.out, p1.u2.r1.registers[10], p1.u2.r1.registers[1], p1.u2.r1.registers[19], $time);
   end
 
   // initial begin
