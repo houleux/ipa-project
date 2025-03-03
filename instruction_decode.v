@@ -5,26 +5,33 @@ module reg_file (
     output [63:0] read_data1, read_data2
 );
 
-  reg signed [63:0] registers [31:0];  
- 
-    always @(*) begin
-        if (reg_write && rd != 0) begin  
-            registers[rd] <= write_data;
-        end
+    reg [63:0] registers [31:0];  
+
+    initial begin
+        registers[0] = 64'b0;  // x0 always 0  
+        registers[1] = 64'd5;  // x1 = 5  
+        registers[2] = 64'd22; // x2 = 22  
+        registers[3] = 64'd15; // x3 = 15  
+        registers[4] = 64'd20; // x4 = 20  
+        registers[5] = 64'd25; // x5 = 25  
+        registers[6] = 64'd30; // x6 = 30  
+        registers[7] = 64'd35; // x7 = 35  
+        registers[8] = 64'd40; // x8 = 40  
+        registers[9] = 64'd45; // x9 = 45  
     end
 
-   
-  assign read_data1 = registers[rs1];  
-  assign read_data2 = registers[rs2];
+    // Register write (combinational)
+    always @(*) begin
+        if (reg_write && rd != 0)  // Prevent writing to x0
+            registers[rd] = write_data;
+    end
 
-  initial begin
-    registers[0] = 0;
-    registers[3] = 9;
-    registers[6] = 12;
-  end
-
+    // Register read (combinational)
+    assign read_data1 = registers[rs1];  
+    assign read_data2 = registers[rs2];
 
 endmodule
+
 
 module immediate_generation (
     input  [31:0] instruction,
@@ -35,13 +42,13 @@ module immediate_generation (
 
     always @(*) begin
         case (opcode) 
-            7'b0010011: // I-Type
+            7'b0000011: // ld
                 imm_out = {{32{instruction[31]}}, instruction[31:20]};
 
             7'b0100011: // S-Type
                 imm_out = {{32{instruction[31]}}, instruction[31:25], instruction[11:7]};
 
-            7'b1100011: // SB-Type
+            7'b1100011: // B-Type
                 imm_out = {{32{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0};
 
             default:
