@@ -9,7 +9,7 @@ module reg_file (
 
     initial begin
         registers[0] = 64'b0; 
-        registers[24] = 64'b1;
+        registers[2] = 64'b10;
         registers[25] = 64'd3;
     end
 
