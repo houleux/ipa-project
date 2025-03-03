@@ -8,6 +8,10 @@ module data_memory (
 
     reg [63:0] memory [0:1023]; 
 
+    initial begin
+        memory[]
+    end
+
     always @(*) begin
         if (MemWrite) 
             memory[address[10:3]] <= write_data;  

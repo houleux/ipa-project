@@ -40,7 +40,7 @@ module instruction_fetch (
 );
 
   program_counter p1(.clk(clk), .reset(rst), .in(in), .out(out));
-  adder a1(.A(out), .B(64'd4), .M(1'b0), .S(PC4));
+  adder a1(.A(out), .B(64'd1), .M(1'b0), .S(PC4));
   instruction_memory im1(.addr(out), .inst(inst));
   
 endmodule
