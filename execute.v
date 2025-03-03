@@ -6,9 +6,9 @@ module mux(a,b,sel,out);
     always @(*)
     begin
         if(sel)
-            out <= a;
-        else
             out <= b;
+        else
+            out <= a;
     end
 
 endmodule
@@ -33,8 +33,8 @@ module alu_control(
                 case ({funct7, funct3}) 
                     10'b0000000_000: control_output = 4'b0010; // ADD
                     10'b0100000_000: control_output = 4'b0110; // SUBTRACT
-                    10'b0000000_100: control_output = 4'b0000; // AND
-                    10'b0000000_101: control_output = 4'b0001; // OR
+                    10'b0000000_111: control_output = 4'b0000; // AND
+                    10'b0000000_110: control_output = 4'b0001; // OR
                     default: control_output = 4'b0000; // Default (safe fallback)
                 endcase
             default: control_output = 4'b0000; // Default case
@@ -57,13 +57,13 @@ module execute (
   output [63:0] in,
   output [63:0] alu_result
 );
-  wire [63:0] rs1, rs2, as, ar;
+  wire [63:0] rs2, as, ar;
   wire [3:0] control;
   wire zero, muxs;
 
   mux m1(.a(read_data2), .b(imm_out), .sel(ALUSrc), .out(rs2));
   alu_control ac1(.instruction(inst), .ALUOp(ALUOp), .control_output(control));
-  alu a1(.rs1(rs1), .rs2(rs2), .ALUcontrol(control), .out(alu_result), .zero(zero));
+  alu a1(.rs1(read_data1), .rs2(rs2), .ALUcontrol(control), .out(alu_result), .zero(zero));
 
   SL1 l1(.A(imm_out), .C(as));
   adder ad1(.A(out), .B(as), .M(1'b0), .S(ar));

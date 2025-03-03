@@ -7,9 +7,9 @@ module write_back(
     always @(*)
     begin
         if(MemtoReg)
-            write_data <= alu_result;
-        else
             write_data <= read_data;
+        else
+            write_data <= alu_result;
     end
 
 endmodule

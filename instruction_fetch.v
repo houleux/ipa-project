@@ -1,12 +1,12 @@
 module program_counter(clk,reset,in,out);
-    input reset,clk;
+    input clk, reset;
     input [63:0] in;
     output reg [63:0] out;
 
     always @(posedge clk or posedge reset)
     begin
         if(reset)
-            out <= 32'b0;
+            out <= 64'b0;
         else 
             out <= in;
     end
@@ -19,7 +19,10 @@ module instruction_memory (
 );
 
   reg [31:0] mem[63:0];
-  integer i;
+
+  initial begin
+    mem[0] = 32'b00000000011000011111010010110011;
+  end
 
   always @(*) begin
     inst <= mem[addr];
