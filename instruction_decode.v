@@ -1,4 +1,5 @@
 module reg_file (
+    input clk,
     input reg_write,
     input [4:0] rs1, rs2, rd,
     input [63:0] write_data,
@@ -9,17 +10,16 @@ module reg_file (
 
     initial begin
         registers[0] = 64'b0; 
-        registers[2] = 64'b10;
-        registers[25] = 64'd3;
+        registers[2] = 64'd10;
     end
 
-    always @(*) begin
-        if (reg_write && rd != 0)  // Prevent writing to x0
-            registers[rd] = write_data;
+    always @(negedge clk) begin
+        if (reg_write && rd != 0) begin
+            registers[rd] <= write_data;
+        end      
     end
 
-    // Register read (combinational)
-    assign read_data1 = registers[rs1];  
+    assign read_data1 = registers[rs1];
     assign read_data2 = registers[rs2];
 
 endmodule
@@ -125,6 +125,7 @@ module control_unit(
 endmodule
 
 module instruction_decode (
+  input clk,
   input [31:0] inst,
   input [63:0] write_data,
   output [1:0] ALUOp,
@@ -142,5 +143,5 @@ module instruction_decode (
 
   control_unit c1(.instruction(inst[6:0]), .MemRead(MemRead), .MemWrite(MemWrite), .Branch(Branch), .MemtoReg(MemtoReg), .ALUOp(ALUOp), .ALUSrc(ALUSrc), .RegWrite(RegWrite));
   immediate_generation ig1(.instruction(inst), .imm_out(imm_out));
-  reg_file r1(.rs1(inst[19:15]), .rs2(inst[24:20]), .rd(inst[11:7]), .reg_write(RegWrite), .read_data1(read_data1), .read_data2(read_data2), .write_data(write_data));
+  reg_file r1(.clk(clk), .rs1(inst[19:15]), .rs2(inst[24:20]), .rd(inst[11:7]), .reg_write(RegWrite), .read_data1(read_data1), .read_data2(read_data2), .write_data(write_data));
 endmodule

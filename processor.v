@@ -19,7 +19,7 @@ module processor (
 
 
   instruction_fetch u1(.clk(clk), .rst(reset), .in(in), .out(out), .inst(inst), .PC4(PC4));
-  instruction_decode u2(.inst(inst), .write_data(write_data), .ALUOp(ALUOp), .imm_out(imm_out), .read_data1(read_data1), .read_data2(read_data2),
+  instruction_decode u2(.clk(clk), .inst(inst), .write_data(write_data), .ALUOp(ALUOp), .imm_out(imm_out), .read_data1(read_data1), .read_data2(read_data2),
   .ALUSrc(ALUSrc), .Branch(Branch), .MemWrite(MemWrite), .MemRead(MemRead), .MemtoReg(MemtoReg));
 
   execute u3(.read_data1(read_data1), .read_data2(read_data2), .imm_out(imm_out), .inst(inst), .ALUOp(ALUOp), .ALUSrc(ALUSrc),
@@ -39,7 +39,7 @@ module testbench;
   always #10 clk = ~clk;
 
   initial begin
-    clk = 1'b0;
+    clk = 1'b1;
     rst = 1'b1;
     #5
     rst = 1'b0;
@@ -57,9 +57,12 @@ module testbench;
   // end
 
   initial begin
-    $monitor("in = %d, result = %d, x1 = %d, x19 = %d, time = %t", p1.u1.out, p1.u2.r1.registers[10], p1.u2.r1.registers[1], p1.u2.r1.registers[19], $time);
+    $monitor("result = %d, time = %t", p1.u2.r1.registers[10], $time);
   end
 
+  // initial begin
+  //   $monitor("rs1 = %d, rs2 = %d, rd = %d, Regwrite = %b, read_data1 = %d, read_data2 = %d, time = %t", p1.u2.inst[19:15], p1.u2.inst[24:20], p1.u2.inst[11:7], p1.u2.RegWrite, p1.u2.read_data1, p1.u2.read_data2, $time);
+  // end
   // initial begin
   //   $monitor("in = %d, imm_out = %d, time = %t", p1.u1.out, p1.u2.imm_out, $time);
   // end
