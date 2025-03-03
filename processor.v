@@ -11,7 +11,8 @@ module processor (
     input reset
 );
 
-  wire [63:0] in, out, PC4, write_data, imm_out, read_data1, read_data2, read_data, alu_result;
+  wire [63:0] in, out, PC4;
+  wire signed [63:0] write_data, imm_out, read_data1, read_data2, read_data, alu_result;
   wire [31:0] inst;
   wire [1:0] ALUOp;
   wire ALUSrc, Branch, MemWrite, MemRead, MemtoReg;
@@ -43,7 +44,7 @@ module testbench;
     #5
     rst = 1'b0;
 
-    #250
+    #2000
     $finish;
   end
 
@@ -58,6 +59,10 @@ module testbench;
   initial begin
     $monitor("in = %d, result = %d, x1 = %d, x19 = %d, time = %t", p1.u1.out, p1.u2.r1.registers[10], p1.u2.r1.registers[1], p1.u2.r1.registers[19], $time);
   end
+
+  // initial begin
+  //   $monitor("in = %d, imm_out = %d, time = %t", p1.u1.out, p1.u2.imm_out, $time);
+  // end
 
   // initial begin
   //   $monitor("rd = %d, time = %t, alu_control = %b", p1.u2.r1.registers[9], $time, p1.u3.control);

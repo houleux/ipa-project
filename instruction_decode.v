@@ -27,21 +27,21 @@ endmodule
 
 module immediate_generation (
     input  [31:0] instruction,
-    output reg [63:0] imm_out
+    output reg signed [63:0] imm_out
 );
 
   wire [6:0] opcode = instruction[6:0];
 
     always @(*) begin
         case (opcode) 
-            7'b0000011: // ld
-                imm_out = {{32{instruction[31]}}, instruction[31:20]};
+            7'b0000011: // I-Type (Load instructions like ld)
+                imm_out = {{52{instruction[31]}}, instruction[31:20]};
 
-            7'b0100011: // S-Type
-                imm_out = {{32{instruction[31]}}, instruction[31:25], instruction[11:7]};
+            7'b0100011: // S-Type (Store instructions like sd)
+                imm_out = {{52{instruction[31]}}, instruction[31:25], instruction[11:7]};
 
-            7'b1100011: // B-Type
-                imm_out = {{32{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0};
+            7'b1100011: // B-Type (Branch instructions like beq, bne)
+                imm_out = {{51{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0};
 
             default:
                 imm_out = 64'b0; // Default case for unknown opcodes
@@ -49,6 +49,7 @@ module immediate_generation (
     end
 
 endmodule
+
 
 module control_unit(
     input [6:0] instruction,

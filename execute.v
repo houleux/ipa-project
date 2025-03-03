@@ -45,9 +45,9 @@ endmodule
 
 
 module execute (
-  input [63:0] read_data1,
-  input [63:0] read_data2,
-  input [63:0] imm_out,
+  input signed [63:0] read_data1,
+  input signed [63:0] read_data2,
+  input signed [63:0] imm_out,
   input [31:0] inst,
   input [1:0] ALUOp,
   input ALUSrc,
@@ -55,7 +55,7 @@ module execute (
   input [63:0] out,
   input [63:0] PC4,
   output [63:0] in,
-  output [63:0] alu_result
+  output signed [63:0] alu_result
 );
   wire [63:0] rs2, as, ar;
   wire [3:0] control;
