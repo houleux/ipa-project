@@ -11,6 +11,7 @@ module reg_file (
     initial begin
         registers[0] = 64'b0; 
         registers[2] = 64'd10;
+        registers[3] = 64'd5;
     end
 
     always @(negedge clk) begin

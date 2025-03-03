@@ -55,9 +55,12 @@ module testbench;
   // initial begin
   //   $monitor("rs1 = %d, rs2 = %d, rd = %d, imm_out = %d, RegWrite = %b, read_data1 = %d, read_data2 = %d, time = %t", p1.inst[19:15], p1.inst[24:20], p1.inst[11:7], p1.u2.imm_out, p1.u2.RegWrite, p1.u2.read_data1, p1.u2.read_data2, $time);
   // end
-
   initial begin
-    $monitor("result = %d, time = %t", p1.u2.r1.registers[10], $time);
+    $display("and and or result of 10 and 5");
+  end
+  
+  initial begin
+    $monitor("and_result = %d, or_result = %d, time = %t", p1.u2.r1.registers[4], p1.u2.r1.registers[5], $time);
   end
 
   // initial begin
