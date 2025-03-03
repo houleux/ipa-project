@@ -43,21 +43,25 @@ module testbench;
     #5
     rst = 1'b0;
 
-    #100
+    #250
     $finish;
   end
 
-  initial begin
-    $monitor("rs1 = %d, rs2 = %d, rd = %d, imm_out = %d, RegWrite = %b, read_data1 = %d, read_data2 = %d, time = %t", p1.inst[19:15], p1.inst[24:20], p1.inst[11:7], p1.u2.imm_out, p1.u2.RegWrite, p1.u2.read_data1, p1.u2.read_data2, $time);
-  end
+  // initial begin
+  //   $monitor("in = %d, out = %d, inst = %b, time = %t", p1.u1.in, p1.u1.out, p1.u1.inst, $time);
+  // end
+
+  // initial begin
+  //   $monitor("rs1 = %d, rs2 = %d, rd = %d, imm_out = %d, RegWrite = %b, read_data1 = %d, read_data2 = %d, time = %t", p1.inst[19:15], p1.inst[24:20], p1.inst[11:7], p1.u2.imm_out, p1.u2.RegWrite, p1.u2.read_data1, p1.u2.read_data2, $time);
+  // end
 
   initial begin
-    $monitor("a1_input = %d, a2_input = %d, alu_result = %d, time = %t", p1.u3.read_data1, p1.u3.rs2, p1.u3.alu_result, $time);
+    $monitor("result = %d, x1 = %d, x19 = %d, time = %t", p1.u2.r1.registers[10], p1.u2.r1.registers[1], p1.u2.r1.registers[19], $time);
   end
 
-  initial begin
-    $monitor("rd = %d, time = %t, alu_control = %b", p1.u2.r1.registers[9], $time, p1.u3.control);
-  end
+  // initial begin
+  //   $monitor("rd = %d, time = %t, alu_control = %b", p1.u2.r1.registers[9], $time, p1.u3.control);
+  // end
 
 endmodule
 

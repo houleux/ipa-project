@@ -8,19 +8,11 @@ module reg_file (
     reg [63:0] registers [31:0];  
 
     initial begin
-        registers[0] = 64'b0;  // x0 always 0  
-        registers[1] = 64'd5;  // x1 = 5  
-        registers[2] = 64'd22; // x2 = 22  
-        registers[3] = 64'd15; // x3 = 15  
-        registers[4] = 64'd20; // x4 = 20  
-        registers[5] = 64'd25; // x5 = 25  
-        registers[6] = 64'd30; // x6 = 30  
-        registers[7] = 64'd35; // x7 = 35  
-        registers[8] = 64'd40; // x8 = 40  
-        registers[9] = 64'd45; // x9 = 45  
+        registers[0] = 64'b0; 
+        registers[24] = 64'b1;
+        registers[25] = 64'd3;
     end
 
-    // Register write (combinational)
     always @(*) begin
         if (reg_write && rd != 0)  // Prevent writing to x0
             registers[rd] = write_data;

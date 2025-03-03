@@ -7,19 +7,18 @@ module data_memory (
 );
 
     reg [63:0] memory [0:1023]; 
-
     initial begin
-        memory[]
+        memory[0] = 32'b1;
+        memory[1] = 32'd10;
     end
-
     always @(*) begin
         if (MemWrite) 
-            memory[address[10:3]] <= write_data;  
+            memory[address[9:0]] <= write_data;  
     end
 
     always @(*) begin
         if (MemRead) 
-            read_data = memory[address[10:3]];   
+            read_data = memory[address[9:0]];   
         else 
             read_data = 64'b0;                 
     end
